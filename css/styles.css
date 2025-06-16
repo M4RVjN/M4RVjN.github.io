@@ -1,0 +1,304 @@
+/*
+ * Marvin's Personal Website Stylesheet
+ * 最後更新時間: 2025年6月17日 (已重構)
+ * 結構:
+ * 1. 全域與根變數 (Global & Root Variables)
+ * 2. 通用元件 (Common Components)
+ * 3. 主要版面配置 (Main Layout)
+ * 4. 頁面專屬樣式 (Page-Specific Styles)
+ * 5. 響應式設計 (Responsive Design)
+*/
+
+/* --- 1. 全域與根變數 (Global & Root Variables) --- */
+:root {
+    --bg-color: #ffffff;
+    --main-blue: #4a90e2;
+    --main-pink: #f8b4d9;
+    --main-green: #54d150;
+    --main-red: #e53935;
+    --accent-orange: #f9a825;
+    --accent-purple: #9c27b0;
+    --text-color: #1a1a1a;
+    --header-font: 'Permanent Marker', cursive;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Noto Sans TC', "Helvetica Neue", Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    color: var(--text-color);
+    margin: 0;
+    padding: 2rem;
+    overflow-x: hidden;
+}
+
+/* --- 2. 通用元件 (Common Components) --- */
+
+/* 導覽列 */
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 1rem 0;
+    margin-bottom: 4rem;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.nav-button {
+    font-family: var(--header-font);
+    font-size: 1.5rem;
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 15px 30px;
+    margin: 10px;
+    transition: transform 0.2s ease, filter 0.3s;
+}
+
+.nav-button-home { background-color: var(--main-pink); clip-path: polygon(0 15%, 100% 0, 95% 100%, 5% 85%); }
+.nav-button-about { background-color: var(--main-blue); clip-path: polygon(5% 0, 90% 5%, 100% 90%, 0 100%); }
+.nav-button-portfolio { background-color: var(--accent-orange); clip-path: polygon(10% 0, 100% 10%, 90% 95%, 0 80%); }
+.nav-button-blog { background-color: var(--main-green); clip-path: polygon(0 5%, 95% 0, 100% 85%, 10% 100%); }
+.nav-button-contact { background-color: var(--main-red); clip-path: polygon(15% 0, 85% 0, 100% 100%, 0 100%); }
+
+.nav-button:hover {
+    animation: shake 0.3s infinite;
+}
+
+/* 漢堡選單 */
+.hamburger-menu {
+    display: none; /* 預設在桌面和平板隱藏 */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 15px;
+    z-index: 1001; /* 確保在最上層 */
+}
+
+.hamburger-menu .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-color);
+    margin: 5px 0;
+    transition: 0.4s;
+}
+
+/* 通用的頁面大標題樣式 (優化) */
+.timeline-header h2,
+.portfolio-header h1,
+#contact .portfolio-header h1 {
+    font-family: var(--header-font);
+    font-size: 3.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+/* 動畫效果 */
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    25% { transform: translate(-1px, -2px) rotate(-1deg); }
+    50% { transform: translate(-2px, 0px) rotate(1deg); }
+    75% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -1px) rotate(1deg); }
+}
+
+@keyframes colorful-hover {
+    0%   { background-color: var(--main-pink); }
+    20%  { background-color: var(--main-blue); }
+    40%  { background-color: var(--accent-orange); }
+    60%  { background-color: var(--main-green); }
+    80%  { background-color: var(--main-red); }
+    100% { background-color: var(--main-pink); }
+}
+
+/* --- 3. 主要版面配置 (Main Layout) --- */
+.main-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.intro-text {
+    flex-basis: 400px;
+    flex-grow: 1;
+}
+
+.intro-text h1 {
+    font-family: var(--header-font);
+    font-size: 4.5rem;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.intro-text p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    /* font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; */
+}
+
+#home .intro-text p {
+    font-family: var(--header-font);
+    font-size: 2.5rem;
+}
+
+.artwork-container {
+    flex-basis: 400px;
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.artwork-image {
+    max-width: 80%;
+    height: auto;
+}
+
+
+/* --- 4. 頁面專屬樣式 (Page-Specific Styles) --- */
+
+/* --- About Page: Minimalist Crayon Timeline --- */
+.timeline-wrapper { position: relative; }
+.timeline-svg { position: absolute; top: 0; left: 50%; transform: translateX(-50%); height: 100%; width: 100px; z-index: 0; }
+.timeline-container { list-style: none; padding: 0; margin: 0; position: relative; z-index: 1; }
+.timeline-item { position: relative; margin-bottom: 50px; width: 50%; padding: 10px 40px; box-sizing: border-box; }
+.timeline-item:nth-child(odd) { left: 0; text-align: right; }
+.timeline-item:nth-child(even) { left: 50%; text-align: left; }
+.timeline-dot { position: absolute; top: 28px; width: 16px; height: 16px; background-color: var(--text-color); border-radius: 50%; z-index: 5; }
+.timeline-item:nth-child(odd) .timeline-dot { right: -8px; }
+.timeline-item:nth-child(even) .timeline-dot { left: -8px; }
+.timeline-content { padding: 15px 20px; position: relative; transition: transform 0.3s ease; }
+.timeline-item:nth-child(odd) .timeline-content:hover { transform: translateX(-10px); }
+.timeline-item:nth-child(even) .timeline-content:hover { transform: translateX(10px); }
+.timeline-content h3 { font-family: var(--header-font); font-size: 2rem; margin: 0 0 10px 0; }
+.timeline-content p { font-size: 1rem; line-height: 1.6; margin: 0; color: #333; }
+.timeline-content p::before { content: ''; display: inline-block; width: 8px; height: 8px; background-color: var(--text-color); border-radius: 50%; margin-right: 12px; vertical-align: middle; margin-bottom: 2px; }
+
+/* --- Portfolio Page Style --- */
+.portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; width: 100%; }
+.portfolio-card { display: flex; flex-direction: column; text-decoration: none; color: var(--text-color); background-color: #fdfdfd; overflow: hidden; border: 10px solid; border-image-source: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9ImNyYXlvbi10ZXh0dXJlIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC4wMiAwLjUiIG51bU9jdGF2ZXM9IjEiIHJlc3VsdD0idHVyYnVsZW5jZSIgLz48ZmVEaXNwbGFjZW1lbnRNYXAgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0idHVyYnVsZW5jZSIgc2NhbGU9IjQiIHgxQ2hhbm5lbFNlbGVjdG9yPSJSIiB5Q2hhbm5lbFNlbGVjdG9yPSJHIiAvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0gMCw1IDMwMCw1IiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIGZpbHRlcj0idXJsKCNjcmF5b24tdGV4dHVyZSkiIC8+PC9zdmc+'); border-image-slice: 10; border-image-repeat: stretch; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.portfolio-card:hover { transform: translateY(-10px) rotate(2deg); box-shadow: -10px 10px 0px var(--main-blue); }
+.portfolio-card.card-color-pink:hover { box-shadow: -10px 10px 0px var(--main-pink); }
+.portfolio-card.card-color-blue:hover { box-shadow: -10px 10px 0px var(--main-blue); }
+.portfolio-card.card-color-green:hover { box-shadow: -10px 10px 0px var(--main-green); }
+.portfolio-card.card-color-orange:hover { box-shadow: -10px 10px 0px var(--accent-orange); }
+.portfolio-card.card-color-red:hover { box-shadow: -10px 10px 0px var(--main-red); }
+.card-image-container { margin: 0; padding: 0; width: 100%; height: 200px; overflow: hidden; }
+.portfolio-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card-description { padding: 1.5rem; }
+.card-description h3 { font-family: var(--header-font); font-size: 1.5rem; margin: 0 0 0.5rem 0; }
+.card-description p { font-size: 1rem; line-height: 1.5; margin: 0; color: #333; }
+
+/* --- Blog Page Style (Link Blocks) --- */
+.blog-links-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; width: 100%; }
+.blog-link-block { text-decoration: none; color: var(--text-color); width: 100%; max-width: 400px; min-height: 150px; display: flex; flex-direction: column; justify-content: center; text-align: left; padding: 20px 35px; }
+.blog-link-block:hover { animation: shake 0.3s infinite, colorful-hover 3s infinite linear; }
+.blog-link-block h2 { font-size: 2rem; margin: 0 0 0.5rem 0; font-family: var(--header-font); }
+.blog-link-block .post-meta { font-size: 0.8rem; color: #333; margin-bottom: 0.8rem; }
+.blog-link-block p { font-size: 1rem; line-height: 1.5; margin: 0; }
+
+/* --- Contact Page Splatter Style (Stable Hover Version) --- */
+#contact .portfolio-header { position: relative; z-index: 1; margin-bottom: -2rem; }
+.contact-splatter-container { position: relative; width: 100%; max-width: 800px; height: 60vh; min-height: 500px; margin: 2rem auto; }
+.contact-splatter-item { position: absolute; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--text-color); transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; animation: drift 12s infinite ease-in-out alternate; }
+.contact-splatter-item:hover { animation-play-state: paused; transform: scale(1.1); z-index: 20; box-shadow: 0 0 35px rgba(0, 0, 0, 0.3); }
+.contact-splatter-item i { font-size: 40px; color: var(--text-color); margin-bottom: 0.5rem; }
+.contact-text { font-family: var(--header-font); font-size: 1.2rem; }
+.splatter-1 { top: 5%; left: 10%; width: 200px; height: 180px; background-color: rgba(74, 144, 226, 0.75); clip-path: polygon(0% 44%, 15% 13%, 34% 0%, 63% 3%, 86% 21%, 100% 41%, 95% 70%, 75% 98%, 45% 99%, 17% 83%); animation-delay: -1s; }
+.splatter-2 { top: 25%; right: 5%; width: 230px; height: 210px; background-color: rgba(248, 180, 217, 0.75); clip-path: polygon(25% 0%, 82% 10%, 100% 50%, 85% 89%, 40% 100%, 12% 88%, 0% 45%); animation-delay: -3s; }
+.splatter-3 { bottom: 20%; left: 20%; width: 220px; height: 190px; background-color: rgba(84, 209, 80, 0.75); clip-path: polygon(0% 59%, 18% 17%, 50% 0%, 82% 12%, 100% 56%, 89% 95%, 52% 100%, 16% 90%); animation-delay: -6s; }
+.splatter-4 { bottom: 5%; right: 25%; width: 190px; height: 190px; background-color: rgba(249, 168, 37, 0.75); clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); animation-delay: -8s; }
+@keyframes drift { 0% { transform: translate(0, 0) rotate(-2deg); } 50% { transform: translate(10px, -5px) rotate(2deg); } 100% { transform: translate(0, 0) rotate(-2deg); } }
+
+
+/* --- 5. 響應式設計 (Responsive Design) --- */
+
+/* --- 平板樣式 (<= 900px) --- */
+@media (max-width: 900px) {
+    .main-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    #home {
+        flex-direction: column-reverse; 
+    }
+}
+
+/* --- 平板樣式 (<= 768px) --- */
+@media (max-width: 768px) {
+    /* Timeline */
+    .timeline-svg { display: none; }
+    .timeline-item,
+    .timeline-item:nth-child(even) { width: 100%; padding-left: 50px; padding-right: 15px; left: 0; text-align: left; }
+    .timeline-item:nth-child(odd) .timeline-dot,
+    .timeline-item:nth-child(even) .timeline-dot { left: 5px; }
+    .timeline-item { border-left: 3px solid var(--text-color); padding-top: 0; padding-bottom: 20px; }
+    /* Contact Page */
+    #contact .portfolio-header { margin-bottom: 2rem; }
+    .contact-splatter-container { position: static; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; height: auto; min-height: auto; }
+    .contact-splatter-item { position: static; width: 80%; max-width: 350px; top: auto; left: auto; right: auto; bottom: auto; animation-delay: 0s !important; transform: rotate(0deg) !important; /* 手機上取消旋轉 */ }
+}
+
+/* --- 手機樣式 (<= 600px) --- */
+@media (max-width: 600px) {
+    body {
+        padding: 1rem;
+    }
+
+    .navbar {
+        justify-content: flex-end;
+        margin-bottom: 2rem;
+    }
+
+    .hamburger-menu {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(26, 26, 26, 0.95);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .nav-links.is-active {
+        display: flex;
+    }
+
+    .nav-links .nav-button {
+        clip-path: none;
+        width: 80%;
+        text-align: center;
+        margin: 15px 0;
+        color: #fff;
+    }
+    
+    .intro-text h1 {
+        font-size: 3rem;
+    }
+
+    #home .intro-text p {
+        font-size: 1.5rem;
+        margin-bottom: 0;
+    }
+
+    .intro-text p {
+        font-size: 1rem;
+    }
+}

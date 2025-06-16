@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;800&display=swap" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="./js/friend.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            new Friend({
+                image: './img/friend1.png',
+                corner: 'bottom-left',
+                rotationOffset: 0
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <button class="hamburger-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="nav-links">
+                <a href="./index.html" class="nav-button nav-button-home">Home</a>
+                <a href="./about.html" class="nav-button nav-button-about">About</a>
+                <a href="./portfolio.html" class="nav-button nav-button-portfolio">Portfolio</a>
+                <a href="./blog.html" class="nav-button nav-button-blog">Blog</a>
+                <a href="./contact.html" class="nav-button nav-button-contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section id="about" class="main-content">
+            <div class="artwork-container">
+                <img src="./img/Me-origin.jpg" alt="Abstract artwork" class="artwork-image">
+            </div>
+            <div class="intro-text">
+                <h1>About Me.</h1>
+                <p>嗨！我是 M4RVjN，一名對資安技術與機器學習充滿熱情的學生。</p>
+                <p>其他閒暇的嗜好大概就是爵士樂、畫畫了吧</p>
+                <p>這個網站主要記錄我的一些經歷、作品和想分享的文章，有時候可能會穿插一些我亂畫的朋友們(?)</p>
+            </div>
+        </section>
+        <section id="timeline">
+            <div class="timeline-header">
+                <h2>My Journey</h2>
+            </div>
+
+            <div class="timeline-wrapper">
+                <svg class="timeline-svg" width="100" height="600" viewBox="0 0 100 600" preserveAspectRatio="none">
+                    <filter id="crayon-texture">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.02 0.5" numOctaves="1" result="turbulence" />
+                        <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="4" xChannelSelector="R" yChannelSelector="G" />
+                    </filter>
+                    <path d="M 50,0 
+                            C 45,80  60,120 50,200
+                            50,200 40,280 50,350
+                            50,350 55,420 50,500
+                            50,500 48,550 50,600" 
+                        stroke="black" stroke-width="3" fill="none" filter="url(#crayon-texture)" />
+                </svg>
+
+                <ul class="timeline-container">
+                    <li class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>2025</h3>
+                            <p>華電聯網/開啟資安-資安部實習</p>
+                            <p>ipas資安初級證照</p>
+                            <p>MyfirstCTF 14th</p>
+                            <p>AIS3 pre-exam 132th</p>
+                            <p>AIS3 2025</p>
+                        </div>
+                    </li>
+                    <li class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>2026</h3>
+                            <p>明志科大 工業人工智慧學士學位學程畢業</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    <script src="js/scripts.js"></script>
+</body>
+</html>
