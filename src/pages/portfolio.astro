@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import friend1 from '../assets/friend1.png';
+import friend2 from '../assets/friend2.png';
+
+// hover 陰影 class 需寫成完整字串，Tailwind 才掃描得到
+const projects = [
+  {
+    title: 'HITCON ZeroDay',
+    description: 'HITCON ZeroDay is a Taiwan-based vulnerability disclosure platform maintained by HITCON',
+    href: 'https://zeroday.hitcon.org/user/M4RVjN/vulnerability',
+    image: friend1,
+    alt: 'Nessus Report Customizer 封面',
+    shadow: 'hover:shadow-[-10px_10px_0_var(--color-blue)]',
+  },
+  {
+    title: 'Desktop Robot',
+    description: 'An interactive desktop robot built with ESP32 to display time, weather, and emotions.',
+    href: 'https://youtube.com/shorts/h-lsJe-Uydg?si=v4jIi5du8sMhQvjt',
+    image: friend2,
+    alt: 'Desktop Robot 封面',
+    shadow: 'hover:shadow-[-10px_10px_0_var(--color-pink)]',
+  }
+];
+---
+<Layout title="Portfolio">
+  <section class="py-4 sm:py-8">
+    <div class="grid w-full grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-6 sm:gap-10">
+      {projects.map((p) => (
+        <a
+          href={p.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class:list={[
+            p.shadow,
+            'flex flex-col overflow-hidden border-crayon bg-[#fdfdfd] text-ink no-underline transition duration-300 hover:-translate-y-2.5 hover:rotate-2 focus-visible:-translate-y-2.5 focus-visible:rotate-2 focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-ink',
+          ]}
+        >
+          <figure class="h-[200px] w-full overflow-hidden">
+            <Image src={p.image} alt={p.alt} class="size-full object-cover" />
+          </figure>
+          <div class="p-5 sm:p-6">
+            <h3 class="mb-2 font-marker text-2xl">{p.title}</h3>
+            <p class="text-base leading-normal text-[#333]">{p.description}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>

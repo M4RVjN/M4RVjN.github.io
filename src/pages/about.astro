@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import me from '../assets/Me.png';
+import Heading from '../components/Heading.astro';
+
+const intro = [
+  '嗨！我是 M4RVjN，一名對資安技術充滿熱情的人類。',
+  '這個網站主要分享我的一些經歷、作品和文章，有時候可能會穿插一些我亂畫的朋友們(?)',
+];
+
+const timeline = [
+  {
+    year: '2023-2024',
+    items: [
+      '成立明志科技大學 工業人工智慧學士學位學程學會',
+      '工業人工智慧學士學位學程學會 第零屆 會長',
+      '工業人工智慧學士學位學程學會 第一屆 會長',
+    ],
+  },
+  {
+    year: '2025',
+    items: ['華電聯網/開啟資安-資安部實習', 'iPAS資安初級證照', 'MyfirstCTF 14th', 'AIS3 2025'],
+  },
+  {
+    year: '2026',
+    items: ['明志科大 工業人工智慧學士學位學程畢業','北科資安社 社長/講師']
+  },
+];
+---
+<Layout title="About">
+  <!-- 小螢幕：圖在上、文字在下；lg 以上左右並排 -->
+  <section class="flex flex-col items-center gap-8 py-4 sm:py-8 lg:flex-row lg:gap-12">
+    <div class="flex w-full max-w-sm justify-center lg:max-w-md lg:basis-2/5">
+      <Image src={me} alt="Abstract artwork" widths={[300, 500]} sizes="(min-width: 1024px) 400px, 80vw" class="h-auto w-4/5" />
+    </div>
+    <div class="max-w-prose lg:flex-1">
+      <h1 class="text-center font-marker text-[clamp(3rem,9vw,4.5rem)] leading-[1.1] lg:text-left">About Me.</h1>
+      {intro.map((line) => <p class="my-[1em] text-base leading-[1.7] sm:text-[1.2rem]">{line}</p>)}
+    </div>
+  </section>
+
+  <section>
+    <Heading as="h2">My Journey</Heading>
+
+    <div class="relative">
+      <!-- md 以上：中間一條蠟筆線、左右交錯；md 以下：左側直線、單欄 -->
+      <svg class="absolute top-0 left-1/2 z-0 hidden h-full w-[100px] -translate-x-1/2 md:block" width="100" height="600" viewBox="0 0 100 600" preserveAspectRatio="none">
+        <filter id="crayon-texture">
+          <feTurbulence type="fractalNoise" baseFrequency="0.02 0.5" numOctaves="1" result="turbulence" />
+          <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="4" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+        <path d="M 50,0 C 45,80 60,120 50,200 50,200 40,280 50,350 50,350 55,420 50,500 50,500 48,550 50,600"
+          stroke="black" stroke-width="3" fill="none" filter="url(#crayon-texture)" />
+      </svg>
+
+      <ul class="relative z-[1]">
+        {timeline.map(({ year, items }, i) => {
+          const left = i % 2 === 0;
+          return (
+            <li class:list={[
+              'relative ml-2 crayon-vline pb-8 pl-8 md:mb-[50px] md:ml-0 md:w-1/2 md:bg-none md:px-10 md:py-2.5',
+              left ? 'md:text-right' : 'md:left-1/2',
+            ]}>
+              <div class:list={[
+                'absolute top-[26px] -left-[8px] z-[5] size-5 crayon-dot bg-ink',
+                left ? 'md:left-auto md:-right-2.5' : 'md:-left-2.5',
+              ]}></div>
+              <div class:list={[
+                'relative py-[15px] transition-transform duration-300 hover:translate-x-2.5 md:px-5',
+                left && 'md:hover:-translate-x-2.5',
+              ]}>
+                <h3 class="mb-2.5 font-marker text-[2rem]">{year}</h3>
+                {items.map((item) => (
+                  <p class="text-base leading-[1.6] text-[#333] before:mr-3 before:mb-0.5 before:inline-block before:size-2.5 before:crayon-dot before:bg-ink before:align-middle">{item}</p>
+                ))}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+</Layout>

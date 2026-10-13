@@ -1,0 +1,35 @@
+---
+import Nav from '../components/Nav.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'M4RVjN 的個人網站：經歷、作品與專欄。' } = Astro.props;
+---
+<!doctype html>
+<html lang="zh-TW" class="max-lg:has-[#nav-toggle:checked]:overflow-hidden">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet" />
+    <slot name="head" />
+  </head>
+  <body class="m-0 overflow-x-hidden bg-white px-4 py-4 font-sans text-ink sm:px-8 sm:py-8">
+    <header class="mx-auto max-w-6xl">
+      <Nav />
+    </header>
+    <main class="mx-auto max-w-6xl pb-12">
+      <slot />
+    </main>
+  </body>
+</html>

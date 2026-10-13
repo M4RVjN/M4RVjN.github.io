@@ -1,0 +1,17 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import me from '../assets/Me.png';
+---
+<Layout title="M4RVjN">
+  <!-- 小螢幕：圖在上、文字在下；lg 以上左右並排 -->
+  <section class="flex flex-col-reverse items-center gap-8 py-4 text-center sm:py-8 lg:flex-row lg:gap-12 lg:text-left">
+    <div class="lg:flex-1">
+      <h1 class="font-marker text-[clamp(3rem,9vw,4.5rem)] leading-[1.1]">Hi, I'm M4RVjN.</h1>
+      <p class="mt-4 font-marker text-[clamp(1.5rem,4.5vw,2.5rem)] leading-[1.6]">A college student.</p>
+    </div>
+    <div class="flex w-full max-w-sm justify-center lg:max-w-md lg:basis-2/5">
+      <Image src={me} alt="Abstract self-portrait" widths={[300, 500]} sizes="(min-width: 1024px) 400px, 80vw" class="h-auto w-4/5" loading="eager" />
+    </div>
+  </section>
+</Layout>

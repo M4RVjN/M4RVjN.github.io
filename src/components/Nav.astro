@@ -1,0 +1,45 @@
+---
+// 漢堡選單用 checkbox + :has() 切換，不需要 JavaScript
+// 五顆按鈕排成一列約需 850px，所以 lg (1024px) 以下一律收成漢堡選單，避免按鈕被擠到第二行
+const links = [
+  { href: '/', label: 'Home', color: 'bg-pink', shape: 'shard-1' },
+  { href: '/about', label: 'About', color: 'bg-blue', shape: 'shard-2' },
+  { href: '/portfolio', label: 'Portfolio', color: 'bg-orange', shape: 'shard-3' },
+  { href: '/blog', label: 'Blog', color: 'bg-green', shape: 'shard-4' },
+  { href: '/contact', label: 'Contact', color: 'bg-red', shape: 'shard-5' },
+];
+
+// build.format 為 file，路徑可能是 /about.html；文章頁 /blog/xxx 也算在 Blog 底下
+const current = Astro.url.pathname.replace(/(\.html|\/)$/, '').replace(/\/index$/, '') || '/';
+const isActive = (href: string) => (href === '/' ? current === '/' : current === href || current.startsWith(`${href}/`));
+---
+<nav class="group mb-8 flex items-center justify-between py-2 lg:mb-16 lg:justify-center lg:py-4">
+  <!-- 小螢幕左上角的名字，回首頁用 -->
+  <a href="/" class="shard-1 bg-pink px-4 py-1 font-marker text-xl text-ink no-underline focus-visible:crayon-underline lg:hidden">M4RVjN</a>
+
+  <label class="relative z-[1001] cursor-pointer p-[15px] lg:hidden" aria-label="切換選單">
+    <input id="nav-toggle" type="checkbox" class="peer sr-only" />
+    <span class="my-[5px] block h-[3px] w-[25px] bg-ink transition duration-400 group-has-checked:translate-y-2 group-has-checked:rotate-45 group-has-checked:bg-white"></span>
+    <span class="my-[5px] block h-[3px] w-[25px] bg-ink transition duration-400 group-has-checked:opacity-0"></span>
+    <span class="my-[5px] block h-[3px] w-[25px] bg-ink transition duration-400 group-has-checked:-translate-y-2 group-has-checked:-rotate-45 group-has-checked:bg-white"></span>
+    <span class="pointer-events-none absolute inset-0 hidden ring-2 ring-ink peer-focus-visible:block"></span>
+  </label>
+
+  <div class="fixed inset-0 z-[1000] hidden flex-col items-center justify-center gap-6 bg-ink/95 group-has-checked:flex lg:static lg:z-auto lg:flex lg:flex-row lg:gap-0 lg:bg-transparent">
+    {links.map(({ href, label, color, shape }) => (
+      <a
+        href={href}
+        aria-current={isActive(href) ? 'page' : undefined}
+        class:list={[
+          color, shape,
+          'group/link w-4/5 max-w-sm px-[30px] py-[15px] text-center font-marker text-2xl text-ink no-underline motion-safe:hover:animate-shake',
+          'aria-[current=page]:-rotate-3 motion-safe:focus-visible:animate-shake',
+          'lg:m-2.5 lg:w-auto lg:max-w-none',
+        ]}
+      >
+        <!-- 底線畫在文字上，手機版按鈕很寬時才不會拉滿整顆按鈕 -->
+        <span class="group-aria-[current=page]/link:crayon-underline group-focus-visible/link:crayon-underline">{label}</span>
+      </a>
+    ))}
+  </div>
+</nav>

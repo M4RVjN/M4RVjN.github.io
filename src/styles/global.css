@@ -1,0 +1,88 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* --- 色票、字型、動畫 --- */
+@theme {
+  --color-ink: #1a1a1a;
+  --color-pink: #f8b4d9;
+  --color-blue: #4a90e2;
+  --color-green: #54d150;
+  --color-red: #e53935;
+  --color-orange: #f9a825;
+  --color-purple: #9c27b0;
+
+  --font-marker: 'Permanent Marker', 'Noto Sans TC', cursive; /* 中文字會落到 Noto Sans TC */
+  --font-sans: 'Noto Sans TC', 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+
+  --animate-shake: shake 0.3s infinite;
+  --animate-shake-rainbow: shake 0.3s infinite, rainbow 3s infinite linear;
+  --animate-drift: drift 12s infinite ease-in-out alternate;
+
+  @keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    25% { transform: translate(-1px, -2px) rotate(-1deg); }
+    50% { transform: translate(-2px, 0) rotate(1deg); }
+    75% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -1px) rotate(1deg); }
+  }
+  @keyframes rainbow {
+    0%, 100% { background-color: var(--color-pink); }
+    20% { background-color: var(--color-blue); }
+    40% { background-color: var(--color-orange); }
+    60% { background-color: var(--color-green); }
+    80% { background-color: var(--color-red); }
+  }
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+    50% { transform: translate(10px, -5px) rotate(2deg); }
+  }
+}
+
+/* --- 抽象不規則形狀 (Tailwind 沒有 clip-path 工具類) --- */
+@utility shard-1 { clip-path: polygon(0 15%, 100% 0, 95% 100%, 5% 85%); }
+@utility shard-2 { clip-path: polygon(5% 0, 90% 5%, 100% 90%, 0 100%); }
+@utility shard-3 { clip-path: polygon(10% 0, 100% 10%, 90% 95%, 0 80%); }
+@utility shard-4 { clip-path: polygon(0 5%, 95% 0, 100% 85%, 10% 100%); }
+@utility shard-5 { clip-path: polygon(15% 0, 85% 0, 100% 100%, 0 100%); }
+
+@utility splat-1 { clip-path: polygon(0% 44%, 15% 13%, 34% 0%, 63% 3%, 86% 21%, 100% 41%, 95% 70%, 75% 98%, 45% 99%, 17% 83%); }
+@utility splat-2 { clip-path: polygon(25% 0%, 82% 10%, 100% 50%, 85% 89%, 40% 100%, 12% 88%, 0% 45%); }
+@utility splat-3 { clip-path: polygon(0% 59%, 18% 17%, 50% 0%, 82% 12%, 100% 56%, 89% 95%, 52% 100%, 16% 90%); }
+@utility splat-4 { clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); }
+
+/* 蠟筆質感邊框 */
+@utility border-crayon {
+  border: 10px solid;
+  border-image-source: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9ImNyYXlvbi10ZXh0dXJlIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC4wMiAwLjUiIG51bU9jdGF2ZXM9IjEiIHJlc3VsdD0idHVyYnVsZW5jZSIgLz48ZmVEaXNwbGFjZW1lbnRNYXAgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0idHVyYnVsZW5jZSIgc2NhbGU9IjQiIHgxQ2hhbm5lbFNlbGVjdG9yPSJSIiB5Q2hhbm5lbFNlbGVjdG9yPSJHIiAvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0gMCw1IDMwMCw1IiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIGZpbHRlcj0idXJsKCNjcmF5b24tdGV4dHVyZSkiIC8+PC9zdmc+');
+  border-image-slice: 10;
+  border-image-repeat: stretch;
+}
+
+/*
+ * 蠟筆底線 / 圓點 / 直線
+ * SVG 濾鏡：feDisplacementMap 讓邊緣抖動，再用雜訊挖出顆粒感，看起來像蠟筆畫的。
+ * 底線與直線是 background-image（固定墨色）；圓點用 mask-image，顏色跟著 bg-* 走。
+ */
+@utility crayon-underline {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cfilter id='c' x='-20%25' y='-50%25' width='140%25' height='200%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='2.5' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 -0.2' result='g'/%3E%3CfeComposite in='d' in2='g' operator='in'/%3E%3C/filter%3E%3Cpath d='M2 6 C 20 3, 40 8, 60 5 S 90 4, 98 6' stroke='%231a1a1a' stroke-width='5' fill='none' stroke-linecap='round' filter='url(%23c)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 100% 0.45em;
+  background-position: 0 100%;
+  background-origin: content-box;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+@utility crayon-dot {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cfilter id='c' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='2' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 -0.1' result='g'/%3E%3CfeComposite in='d' in2='g' operator='in'/%3E%3C/filter%3E%3Ccircle cx='10' cy='10' r='8' fill='black' filter='url(%23c)'/%3E%3C/svg%3E");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+
+@utility crayon-vline {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 100' preserveAspectRatio='none'%3E%3Cfilter id='c' x='-50%25' y='-20%25' width='200%25' height='140%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='2.5' xChannelSelector='R' yChannelSelector='G' result='d'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 -0.2' result='g'/%3E%3CfeComposite in='d' in2='g' operator='in'/%3E%3C/filter%3E%3Cpath d='M5 0 C 3 30, 7 60, 5 100' stroke='%231a1a1a' stroke-width='5' fill='none' filter='url(%23c)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 7px 100%;
+  background-position: 0 0;
+}

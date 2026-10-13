@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Heading from '../components/Heading.astro';
+import { getPosts, formatDate, shardStyles } from '../lib/posts';
+
+const posts = await getPosts();
+---
+<Layout title="Blog" description="M4RVjN 的專欄：資安、CTF writeup 與一些雜記。">
+  <section class="py-4 sm:py-8">
+    <div class="w-full">
+      <Heading>My Blog</Heading>
+      <div class="flex w-full flex-wrap justify-center gap-8">
+        {posts.map((post, i) => (
+          <a
+            href={`/blog/${post.id}`}
+            class:list={[
+              shardStyles[i % shardStyles.length],
+              'flex min-h-[150px] w-full max-w-[400px] flex-col justify-center px-7 py-6 text-left text-ink no-underline sm:px-[35px]',
+              'motion-safe:hover:animate-shake-rainbow focus-visible:crayon-underline motion-safe:focus-visible:animate-shake-rainbow',
+            ]}
+          >
+            <h2 class="mb-1 font-marker text-[clamp(1.5rem,5vw,2rem)] leading-tight">
+              {post.data.draft && <span class="mr-2 bg-ink px-2 text-base text-white">草稿</span>}
+              {post.data.title}
+            </h2>
+            <p class="mb-3 text-sm">
+              <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+              {post.data.tags.map((tag) => <span class="ml-2">#{tag}</span>)}
+            </p>
+            <p class="text-base leading-normal">{post.data.description}</p>
+          </a>
+        ))}
+
+        {posts.length === 0 && (
+          <div class="shard-2 flex min-h-[150px] w-full max-w-[400px] flex-col justify-center bg-pink/50 px-[35px] py-5">
+            <p class="font-marker text-[2rem]">Coming Soon</p>
+            <p>第一篇文章還在路上。</p>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Heading from '../components/Heading.astro';
+
+// 位置/形狀 class 需寫成完整字串，Tailwind 才掃描得到；位置只在 lg 以上的拼貼版面生效
+const contacts = [
+  {
+    label: 'GitHub',
+    icon: 'fa-brands fa-github',
+    href: 'https://github.com/M4RVjN',
+    style: 'h-[180px] bg-blue/75 splat-1 lg:top-[5%] lg:left-[10%] lg:w-[200px] [animation-delay:-1s]',
+  },
+  {
+    label: 'Instagram',
+    icon: 'fa-brands fa-instagram',
+    href: 'https://instagram.com/nnarvjn',
+    style: 'h-[210px] bg-pink/75 splat-2 lg:top-[25%] lg:right-[5%] lg:w-[230px] [animation-delay:-3s]',
+  },
+  {
+    label: 'Linkedin',
+    icon: 'fa-brands fa-linkedin',
+    href: 'https://www.linkedin.com/in/zhi-cheng-huang-9689b336b',
+    style: 'h-[190px] bg-green/75 splat-3 lg:bottom-[20%] lg:left-[20%] lg:w-[220px] [animation-delay:-6s]',
+  },
+  {
+    label: 'Email',
+    icon: 'fa-solid fa-envelope',
+    href: 'mailto:marvinhuangzhicheng@email.com',
+    style: 'h-[190px] bg-orange/75 splat-4 lg:bottom-[5%] lg:right-[25%] lg:w-[190px] [animation-delay:-8s]',
+  },
+];
+---
+<Layout title="Contact">
+  <link slot="head" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <section class="py-4 sm:py-8">
+    <div class="mx-auto flex w-full max-w-[800px] flex-col items-center gap-6 lg:relative lg:block lg:h-[60vh] lg:min-h-[560px]">
+      <Heading class="lg:relative lg:z-[1] lg:-mb-8">Find Me Here</Heading>
+
+      {contacts.map((c) => {
+        const external = c.href.startsWith('http');
+        return (
+          <a
+            href={c.href}
+            target={external ? '_blank' : undefined}
+            rel={external ? 'noopener noreferrer' : undefined}
+            class:list={[
+              c.style,
+              'flex w-4/5 max-w-[350px] flex-col items-center justify-center gap-2 text-ink no-underline transition-[scale] duration-300 hover:z-20 hover:scale-110 focus-visible:z-20 focus-visible:scale-110 focus-visible:crayon-underline',
+              'lg:absolute lg:max-w-none lg:motion-safe:animate-drift lg:hover:[animation-play-state:paused] lg:focus-visible:[animation-play-state:paused]',
+            ]}
+          >
+            <i class:list={[c.icon, 'mb-2 text-[40px]']}></i>
+            <span class="font-marker text-[1.2rem]">{c.label}</span>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+</Layout>
